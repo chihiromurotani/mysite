@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset = "utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+    <a class="navbar-brand" href="{% url 'projectapp:top' %}">トップ画面</a>
+    <a class="navbar-brand" href="{% url 'projectapp:category_regist' %}">カテゴリ新規登録</a>
+    </nav>
+    {% block content %}
+      <table>
+        <tbody>
+        {% for category in category_list %}
+        <tr>
+          <td>カテゴリ名 : <a href="{% url 'projectapp:item_get_list' category_id=category.id %}">{{ category.category_name }} </a></td>
+          <td><a href="{% url 'projectapp:category_update' category.id %}">編集</td>
+          <td><a href="{% url 'projectapp:category_delete' category.id %}">削除</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% endblock %} 
+  </body>
+</html>

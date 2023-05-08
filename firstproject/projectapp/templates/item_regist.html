@@ -1,0 +1,8 @@
+{% extends 'item_get_list.html' %}
+{% block content %}
+<form method="POST" class="post-form" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="保存">
+</form>
+{% endblock %}

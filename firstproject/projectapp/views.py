@@ -64,10 +64,9 @@ class RegistCategoryView(CreateView): #カテゴリ新規登録
         form.instance.update_at = datetime.datetime.today()
         form.instance.user = self.request.user        
         return super(RegistCategoryView,self).form_valid(form)
-    
+
     def get_success_url(self):
         return reverse_lazy('projectapp:category_list')
-    
 
 
 class CategoryUpdateView(UpdateView):#カテゴリ編集
@@ -106,7 +105,7 @@ class ItemGetListView(ListView): #カテゴリごとのアイテム名一覧表�
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        category_id = self.kwargs('category_id')
+        category_id = self.kwargs['category_id']
         context['category_id'] = category_id
         return context
 
@@ -115,13 +114,17 @@ class RegistItemView(CreateView): #アイテム新規登録
     model = Item
     template_name = 'item_regist.html'
     form_class = RegistItemForm
-    # success_url = reverse_lazy('projectapp:item_get_list')
-    context_object_name = 'category_list'
 
-    def form_valid(self,form):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs['category_id']
+        context['category_id'] = category_id
+        return context
+
+    def form_valid(self, form, **kwargs):
         form.instance.create_at = datetime.datetime.today()
         form.instance.update_at = datetime.datetime.today()
-        form.instance.category = self.request.category        
+        form.instance.category = Category(id=self.kwargs['category_id'])
         form.instance.user = self.request.user         
         return super(RegistItemView,self).form_valid(form)
     
@@ -166,3 +169,4 @@ class ItemDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+

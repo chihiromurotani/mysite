@@ -151,6 +151,7 @@ class ItemUpdateView(UpdateView):#アイテム編集
     def form_valid(self, form, **kwargs):
         form.instance.update_at = datetime.datetime.today()       
         return super(ItemUpdateView,self).form_valid(form)
+    
 
     
 class ItemDeleteView(DeleteView):#アイテム削除

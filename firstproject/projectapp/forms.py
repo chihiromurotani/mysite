@@ -86,17 +86,26 @@ class RegistItemForm(forms.ModelForm): #item新規登録
       return obj
 
 class UpdateItemForm(forms.ModelForm): #アイテム編集
+    SIZE_CHOICES = [
+        ('XS', 'XS'),
+        ('S', 'S'),
+        ('M', 'M'),
+        ('L', 'L'),
+        ('F', 'F')
+    ]    
+    SEASON_CHOICES = [
+        ('春', '春'),
+        ('夏', '夏'),
+        ('秋', '秋'),
+        ('冬', '冬')
+    ]   
     item_name = forms.CharField(label='アイテム名')
     item_picture =forms.FileField(label='画像')
     item_brand = forms.CharField(label='ブランド') 
     item_price = forms.IntegerField(label='価格')    
     item_color = forms.CharField(label='カラー',required=False) 
-    item_size = forms.ChoiceField(choices=(
-      Item.SIZE_CHOICES
-    ),label='サイズ',required=False,widget=forms.CheckboxSelectMultiple)
-    item_season = forms.ChoiceField(choices=(
-      Item.SEASON_CHOICES
-    ),label='季節',required=False,widget=forms.CheckboxSelectMultiple)
+    item_size = forms.MultipleChoiceField(choices=SIZE_CHOICES,label='サイズ',required=False,widget=forms.CheckboxSelectMultiple)
+    item_season = forms.MultipleChoiceField(choices=SEASON_CHOICES,label='季節',required=False,widget=forms.CheckboxSelectMultiple)
     item_purchase_date = forms.DateField(label='購入日',required=False)
     item_expiration_date =forms.DateField(label='消費期限',required=False)
     memo = forms.CharField(widget=forms.Textarea,label='メモ',required=False)

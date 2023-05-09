@@ -14,12 +14,7 @@
         <tbody>
         {% for item in item_get_list %}
         <tr>
-          <td>アイテム名 : <a href="{{ item.get_absolute_url }}">{{ item.item_name }} </a></td>
-          <td>
-            {% comment %} {% for item in item_picture_list%}
-              <img width="100px" height="100px" src="{{item.item_picture.url}}">
-            {% endfor %} {% endcomment %}
-          </td> 
+          <td>アイテム名 : <a href="{% url 'projectapp:item_detail' item.id %}">{{ item.item_name }} </a></td>
           <td><a href="{% url 'projectapp:item_update' item.id %}">編集</td>
           <td><a href="{% url 'projectapp:item_delete' item.id %}">削除</td> 
         {% endfor %}

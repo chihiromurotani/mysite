@@ -64,10 +64,10 @@ class RegistCategoryView(CreateView): #カテゴリ新規登録
         form.instance.update_at = datetime.datetime.today()
         form.instance.user = self.request.user        
         return super(RegistCategoryView,self).form_valid(form)
-    
+
     def get_success_url(self):
         return reverse_lazy('projectapp:category_list')
-    
+
 
 
 class CategoryUpdateView(UpdateView):#カテゴリ編集
@@ -106,7 +106,7 @@ class ItemGetListView(ListView): #カテゴリごとのアイテム名一覧表�
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        category_id = self.kwargs('category_id')
+        category_id = self.kwargs['category_id']
         context['category_id'] = category_id
         return context
 
@@ -115,18 +115,22 @@ class RegistItemView(CreateView): #アイテム新規登録
     model = Item
     template_name = 'item_regist.html'
     form_class = RegistItemForm
-    # success_url = reverse_lazy('projectapp:item_get_list')
-    context_object_name = 'category_list'
 
-    def form_valid(self,form):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs['category_id']
+        context['category_id'] = category_id
+        return context
+
+    def form_valid(self, form, **kwargs):
         form.instance.create_at = datetime.datetime.today()
         form.instance.update_at = datetime.datetime.today()
-        form.instance.category = self.request.category        
+        form.instance.category = Category(id=self.kwargs['category_id'])      
         form.instance.user = self.request.user         
         return super(RegistItemView,self).form_valid(form)
     
     def get_success_url(self):
-        return reverse_lazy('projectapp:item_get_list',kwargs={'pk': self.object.id})
+        return reverse_lazy('projectapp:item_get_list',kwargs={'category_id':self.kwargs['category_id']})
     
 
 
@@ -134,29 +138,28 @@ class ItemUpdateView(UpdateView):#アイテム編集
     model = Item
     template_name = 'item_update.html'
     form_class = forms.UpdateItemForm
-    # success_url = reverse_lazy('projectapp:item_get_list')
-
+    
     def get_success_url(self):
-        return reverse_lazy('projectapp:item_get_list',kwargs={'pk': self.object.id})
-
-    def form_valid(self,form):
-        form.instance.update_at = datetime.datetime.today()
-        return super(ItemUpdateView,self).form_valid(form)
+        return reverse_lazy('projectapp:item_detail',kwargs={'pk':self.kwargs['pk']})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        pk = self.kwargs['pk'] #URLの引数を取得
+        context['pk'] = pk #引数をコンテキストに追加
         return context
+
+    def form_valid(self, form, **kwargs):
+        form.instance.update_at = datetime.datetime.today()       
+        return super(ItemUpdateView,self).form_valid(form)
     
 
     
 class ItemDeleteView(DeleteView):#アイテム削除
     model = Item
     template_name = 'item_delete.html'
-    # success_url = reverse_lazy('projectapp:item_get_list')
 
     def get_success_url(self):
-        return reverse_lazy('projectapp:item_get_list',kwargs={'pk': self.object.id})
-    
+        return reverse_lazy('projectapp:category_list')
 
     
 class ItemDetailView(DetailView):

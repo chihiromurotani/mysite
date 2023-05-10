@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+<div style="text-align: center">
 <html lang="ja">
   <head>
     <meta charset = "utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand" href="{% url 'projectapp:category_list'  %}">ホーム</a>
-    <a class="navbar-brand" href="{% url 'projectapp:item_update' item.id %}">アイテム編集</a>
-    <a class="navbar-brand" href="{% url 'projectapp:category_list' %}">検索</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-info row justify-content-center">
+    <a class="navbar-brand col-2" href="{% url 'projectapp:category_list'  %}">ホーム</a>
+    <a class="navbar-brand col-2" href="{% url 'projectapp:item_update' item.id %}">アイテム編集</a>
+    <a class="navbar-brand col-2" href="{% url 'projectapp:item_delete' item.id %}">アイテム削除</a>    
     </nav>
     {% block content %}
       <h1>{{ item.item_name }}<br></h1>
@@ -19,8 +20,8 @@
       サイズ : {{ item.item_size }}<br>
       季節 : {{ item.item_season }}<br>
       購入日 : {{ item.item_purchase_date }}<br>
-      消費期限 : {{ item.item_expiration_date }}<br>
       メモ : {{ item.memo }}
     {% endblock %} 
   </body>
-</html>     
+</html> 
+</div>    

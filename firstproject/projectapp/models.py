@@ -65,25 +65,25 @@ class Category(models.Model): #カテゴリ(トップス、ボトムスなど)
         return reverse_lazy('projectapp:item_get_list',kwargs={'pk': self.pk})
 
 class Item(models.Model):#各アイテム(白Tシャツ、花柄スカートなど)
-    SIZE_CHOICES = (
+    SIZE_CHOICES = [
         ('XS', 'XS'),
         ('S', 'S'),
         ('M', 'M'),
         ('L', 'L'),
         ('F', 'F')
-    )    
-    SEASON_CHOICES = (
+    ]    
+    SEASON_CHOICES = [
         ('春', '春'),
         ('夏', '夏'),
         ('秋', '秋'),
         ('冬', '冬')
-    )     
+    ]    
     item_name = models.CharField(max_length=150)
     item_picture = models.FileField(upload_to='item_picture/',null=True,blank=True)
     item_color = models.CharField(max_length=150,db_index=True,null=True,blank=True) 
     item_brand = models.CharField(max_length=150,db_index=True,blank=True) 
-    item_size = models.CharField(max_length=150,null=True,blank=True,choices=SIZE_CHOICES)
     item_price = models.IntegerField()
+    item_size = models.CharField(max_length=150,null=True,blank=True,choices=SIZE_CHOICES)
     item_season = models.CharField(max_length=150,db_index=True,null=True,blank=True,choices=SEASON_CHOICES)
     item_purchase_date = models.DateField(null=True,blank=True)
     item_expiration_date = models.DateField(null=True,blank=True)

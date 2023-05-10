@@ -5,26 +5,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand" href="{% url 'projectapp:category_list' %}">ホーム</a>
-    <a class="navbar-brand" href="{% url 'projectapp:item_regist' category_id=category_id %}">アイテム新規登録</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-info row justify-content-center">
+    <a class="navbar-brand col-2" href="{% url 'projectapp:category_list' %}">ホーム</a>
+    <a class="navbar-brand col-2" href="{% url 'projectapp:item_regist' category_id=category_id %}">アイテム新規登録</a>
     </nav>
     {% block content %}
-      <table>
+      <table align="center">
         <tbody>
         {% for item in item_get_list %}
         <tr>
-          <td>アイテム名 : <a href="{{ item.get_absolute_url }}">{{ item.item_name }} </a></td>
-          <td>
-            {% comment %} {% for item in item_picture_list%}
-              <img width="100px" height="100px" src="{{item.item_picture.url}}">
-            {% endfor %} {% endcomment %}
-          </td> 
-          <td><a href="{% url 'projectapp:item_update' item.id %}">編集</td>
-          <td><a href="{% url 'projectapp:item_delete' item.id %}">削除</td> 
+          <td><a class="navbar-brand col-2 row justify-content-center" href="{% url 'projectapp:item_detail' item.id %}">{{ item.item_name }} </a></td>
         {% endfor %}
         </tbody>
       </table>
     {% endblock %} 
   </body>
-</html>
+</html> 

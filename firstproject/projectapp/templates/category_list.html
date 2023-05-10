@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-{% comment %} {% load static %} {% endcomment %}
 <html lang="ja">
   <head>
     <meta charset = "utf-8">
-    {% comment %} <link rel="stylesheet" href="{% static 'style.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand" href="{% url 'projectapp:top' %}">トップ画面</a>
-    <a class="navbar-brand" href="{% url 'projectapp:category_regist' %}">カテゴリ新規登録</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-info row justify-content-center">
+    <a class="navbar-brand col-2" href="{% url 'projectapp:top' %}">トップ画面</a>
+    <a class="navbar-brand col-2" href="{% url 'projectapp:category_regist' %}">カテゴリ新規登録</a>
     </nav>
-    {% block content %}   
-      <table>
+    {% block content %} 
+      <div style="text-align: center"><h4>カテゴリ一覧</h4></div>
+      <table align="center">
         <tbody>
-        {% for category in category_list %}
+        {% for category in category_list %}     
         <tr>
-          <td>カテゴリ名 : <a href="{% url 'projectapp:item_get_list' category_id=category.id %}">{{ category.category_name }} </a></td>
-          <td><a href="{% url 'projectapp:category_update' category.id %}">編集</td>
-          <td><a href="{% url 'projectapp:category_delete' category.id %}">削除</td>
+          <td><a class="navbar-brand col-2 row justify-content-center" href="{% url 'projectapp:item_get_list' category_id=category.id %}">{{ category.category_name }} </></td>
+          <td><a class="navbar-brand col-2 row justify-content-center" href="{% url 'projectapp:category_update' category.id %}">編集</td>
+          <td><a class="navbar-brand col-2 row justify-content-center" href="{% url 'projectapp:category_delete' category.id %}">削除</td>
         </tr>
+        </div>
         {% endfor %}
         </tbody>
       </table>

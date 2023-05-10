@@ -140,7 +140,7 @@ class ItemUpdateView(UpdateView):#アイテム編集
     form_class = forms.UpdateItemForm
     
     def get_success_url(self):
-        return reverse_lazy('projectapp:item_get_list',kwargs={'category_id':self.kwargs['category_id']})
+        return reverse_lazy('projectapp:item_detail',kwargs={'pk':self.kwargs['pk']})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -159,8 +159,7 @@ class ItemDeleteView(DeleteView):#アイテム削除
     template_name = 'item_delete.html'
 
     def get_success_url(self):
-        return reverse_lazy('projectapp:item_get_list',kwargs={'category_id':self.kwargs['category_id']})
-
+        return reverse_lazy('projectapp:category_list')
 
     
 class ItemDetailView(DetailView):
